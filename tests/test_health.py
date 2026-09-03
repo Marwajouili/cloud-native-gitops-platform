@@ -18,3 +18,17 @@ def test_health():
 
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
+
+
+def test_ready():
+    response = client.get("/ready")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "ready"
+
+
+def test_get_items():
+    response = client.get("/api/items")
+
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)

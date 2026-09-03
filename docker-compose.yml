@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    container_name: cloudnative-api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/cloudnative
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: cloudnative-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cloudnative
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
