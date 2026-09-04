@@ -1,0 +1,35 @@
+api:
+  replicaCount: 1
+
+  image:
+    repository: cloudnative-api
+    tag: "0.2.0"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 8000
+
+  probes:
+    liveness:
+      path: /health
+    readiness:
+      path: /ready
+
+postgres:
+  image:
+    repository: postgres
+    tag: "16"
+    pullPolicy: IfNotPresent
+
+  database: cloudnative
+  username: postgres
+  password: postgres
+
+  service:
+    port: 5432
+
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 1Gi
